@@ -1,0 +1,42 @@
+export var jsx = (key, props) => typeof key === "function"
+    ? props.$
+        ? (key = key(props), key.$ = props.$, key)
+        : key(props)
+    : createNode((props.tagName = key, props));
+export var Fragment = (props) => props.children;
+export var createNode = (props) =>
+    typeof props === "string" || typeof props === "number"
+        ? window.document.createTextNode(props)
+        : !props
+            ? window.document.createTextNode("")
+            : props instanceof window.Node
+                ? props
+                : props instanceof Promise
+                    ? (props.then((p) => props.replaceWith(createNode(p))),
+                        props = createNode(props.$))
+                    : props instanceof Array
+                        ? createNode({ tagName: "div", children: props })
+                        : assign(
+                            window.document.createElementNS(
+                                props.namespaceURI || "http://www.w3.org/1999/xhtml",
+                                props.tagName
+                            ),
+                            props
+                        );
+var assign = (on, from) => {
+    for (const prop in from) {
+        prop === "tagName" || prop === "namespaceURI" ? 0
+            : prop === "children"
+                ? append(on, from[prop])
+                : typeof from[prop] === "object"
+                    ? assign(on[prop], from[prop])
+                    : (from[prop] || from[prop] === 0) &&
+                    (on.namespaceURI === "http://www.w3.org/2000/svg"
+                        ? on.setAttribute(prop, from[prop])
+                        : on[prop] = from[prop]);
+    }
+    return on;
+};
+var append = (on, children) => Array.isArray(children)
+    ? children.forEach((child) => append(on, child))
+    : on.appendChild(createNode(children));

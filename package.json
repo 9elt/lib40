@@ -1,0 +1,36 @@
+{
+    "name": "lib42",
+    "version": "0.0.1",
+    "description": "A better version of document.createElement with support for JSX and async components in 42 LOC",
+    "main": "./index.js",
+    "types": "./index.d.ts",
+    "type": "module",
+    "exports": {
+        ".": {
+            "import": "./index.js",
+            "types": "./index.d.ts"
+        },
+        "./jsx-runtime": {
+            "import": "./jsx-runtime.js",
+            "types": "./jsx-runtime.d.ts"
+        },
+        "./jsx-dev-runtime": {
+            "import": "./jsx-runtime.js",
+            "types": "./jsx-runtime.d.ts"
+        }
+    },
+    "scripts": {
+        "test": "echo TODO",
+        "pub": "npm run test && npm publish"
+    },
+    "author": "Lorenzo Cicuttin",
+    "license": "MIT",
+    "keywords": [
+        "createElement",
+        "createNode",
+        "jsx"
+    ],
+    "readme": "./README.md",
+    "homepage": "github:9elt/miniframe",
+    "repository": "github:9elt/miniframe"
+}

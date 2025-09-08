@@ -1,0 +1,3 @@
+lib42
+
+A better version of document.createElement with support for JSX and async components in 42 LOC
