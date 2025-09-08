@@ -1,7 +1,5 @@
 export var jsx = (key, props) => typeof key === "function"
-    ? props.$
-        ? (key = key(props), key.$ = props.$, key)
-        : key(props)
+    ? (key = key(props), key instanceof Promise && (key.$ = props.$), key)
     : createNode((props.tagName = key, props));
 export var Fragment = (props) => props.children;
 export var createNode = (props) =>
