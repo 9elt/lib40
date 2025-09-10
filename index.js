@@ -1,5 +1,5 @@
 export var jsx = (key, props) => typeof key === "function"
-    ? (key = key(props), key instanceof Promise && (key.$ = props.$), key)
+    ? (key = key(props), key instanceof Promise && (key.$ = props.$) && delete props.$, key)
     : createNode((props.tagName = key, props));
 export var Fragment = (props) => props.children;
 export var createNode = (props) =>
@@ -22,7 +22,7 @@ export var createNode = (props) =>
                             props
                         );
 var assign = (on, from) => (Object.keys(from).forEach((prop) =>
-    prop === "tagName" || prop === "namespaceURI" || prop === "$" ? 0
+    prop === "tagName" || prop === "namespaceURI" ? 0
         : prop === "children"
             ? append(on, from[prop])
             : typeof from[prop] === "object"
