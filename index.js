@@ -21,20 +21,17 @@ export var createNode = (props) =>
                             ),
                             props
                         );
-var assign = (on, from) => {
-    for (const prop in from) {
-        prop === "tagName" || prop === "namespaceURI" || prop === "$" ? 0
-            : prop === "children"
-                ? append(on, from[prop])
-                : typeof from[prop] === "object"
-                    ? assign(on[prop], from[prop])
-                    : (from[prop] || from[prop] === 0) &&
-                    (on.namespaceURI === "http://www.w3.org/2000/svg"
-                        ? on.setAttribute(prop, from[prop])
-                        : on[prop] = from[prop]);
-    }
-    return on;
-};
+var assign = (on, from) => (Object.keys(from).forEach((prop) =>
+    prop === "tagName" || prop === "namespaceURI" || prop === "$" ? 0
+        : prop === "children"
+            ? append(on, from[prop])
+            : typeof from[prop] === "object"
+                ? assign(on[prop], from[prop])
+                : (from[prop] || from[prop] === 0) &&
+                (on.namespaceURI === "http://www.w3.org/2000/svg"
+                    ? on.setAttribute(prop, from[prop])
+                    : on[prop] = from[prop])
+), on);
 var append = (on, children) => Array.isArray(children)
     ? children.forEach((child) => append(on, child))
     : on.appendChild(createNode(children));
