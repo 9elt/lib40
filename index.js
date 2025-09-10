@@ -12,7 +12,7 @@ export var createNode = (props) =>
                 : props instanceof Promise
                     ? (props.then((p) => props.replaceWith(createNode(p))),
                         props = createNode(props.$))
-                    : props instanceof Array
+                    : Array.isArray(props)
                         ? createNode({ tagName: "div", children: props })
                         : assign(
                             window.document.createElementNS(
@@ -23,7 +23,7 @@ export var createNode = (props) =>
                         );
 var assign = (on, from) => {
     for (const prop in from) {
-        prop === "tagName" || prop === "namespaceURI" ? 0
+        prop === "tagName" || prop === "namespaceURI" || prop === "$" ? 0
             : prop === "children"
                 ? append(on, from[prop])
                 : typeof from[prop] === "object"
