@@ -1,7 +1,7 @@
 {
-    "name": "lib40",
+    "name": "lib37",
     "version": "0.0.1",
-    "description": "A better version of document.createElement with support for JSX and async components in 40 LOC",
+    "description": "A better version of document.createElement with support for JSX and async components in 37 LOC",
     "main": "./index.js",
     "types": "./index.d.ts",
     "type": "module",
